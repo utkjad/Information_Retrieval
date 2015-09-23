@@ -1,40 +1,141 @@
+""" 
+HW1 
+Implmenting a simple focused web crawler for Wikipedia
 """
-Crawling starts here
-"""
-
 import requests
 from bs4 import BeautifulSoup
-import urllib2, urlparse 
+import urllib2
+import urlparse
+import time
+import re 
 
-def is_url_valid(master_page, href_text):
-	"""
+# Keeps track of visited urls 
+visited_urls = []
+# URL frontier
+url_frontier = []
+# URL containing keyphrase, can have maximum 1000 such URLs.
+urls_containing_keyphrase = []
+
+def is_url_valid(current_page_url, href_text):
+	""" Checks if url is in Wikipedia, not redirected to Main_Page and is an english page
+
+	Arguments:
+		current_page_url - URL of current page_url
+		href_text -  text in anchor href tag
+
+	Returns:
+		True if URL is valid
 	"""
 	return ":" not in href_text \
-	and "http://en.wikipedia.org/wiki/" in urlparse.urljoin(master_page, href_text)\
-	and "http://en.wikipedia.org/wiki/Main_Page" not in urlparse.urljoin(master_page, href_text)
+		and "http://en.wikipedia.org/wiki/" in urlparse.urljoin(current_page_url, href_text)\
+		and "http://en.wikipedia.org/wiki/Main_Page" not in urlparse.urljoin(current_page_url, href_text)
 
-def is_unique_url():
+def is_unique_url(url):
+	""" Checks if url is unique or not
 
-def crawl_main():#seed_page = "http://en.wikipedia.org/wiki/Hugh_of_Saint-Cher", keyphrase = ""):
+	Arguments:
+		url - current URL
+
+	Returns:
+		True if URL is unique
 	"""
-	"""
-	seed_page = "http://en.wikipedia.org/wiki/Hugh_of_Saint-Cher"
-	response_obj = requests.get(seed_page)
-	soup = BeautifulSoup(response_obj.content, "html.parser")
+	return url not in [i[0] for i in visited_urls]
 
-	unique_urls = []
-
-	for link in soup.find_all('a', href = True):
-		if is_url_valid(seed_page, link['href']):
-			if is_unique_url(urlparse.urljoin(seed_page, link['href']), unique_urls):
-			unique_urls.append(urlparse.urljoin(seed_page, link['href']))
-
-
-
-	print unique_urls
 	
 
+def real_crawling(keyphrase=None, maxdepth = 5): 
+	""" Function implementing crawling
+
+	Arguements:
+		keyphrase - word to be searched  
+	"""
+	# Initialize depth and total crawled URLs.
+	depth = 1 
+	total_crawled_urls = 1
+	track_depth = 0
+	total_keyphrase_url =  0 
+
+	def _should_get_logged():
+		if keyphrase == None:
+			return len(url_frontier) != 0 and depth <= maxdepth and total_crawled_urls <= 1000
+		else:
+			return len(url_frontier) != 0 and depth <= maxdepth and total_keyphrase_url <= 1000
+
+	# Apply BFS
+	while _should_get_logged(): 
+		page_url, depth =  url_frontier.pop(0)
+		if is_unique_url(page_url):
+			# print "CRAWLED=%d depth=%d FOR %s" %(total_crawled_urls, depth, page_url)
+			# mark it visited
+			time.sleep(0.1)
+			response_obj = requests.get(page_url)
+			soup = BeautifulSoup(response_obj.content, "html.parser")
+			total_crawled_urls = total_crawled_urls + 1
+
+			if keyphrase is not None:
+
+				regex_keyphrase = re.compile(keyphrase, re.IGNORECASE)
+				# remove scripts and footer
+				for tag in soup.findAll(['script', 'form']) + soup.findAll(id="footer"):
+					tag.extract()
+
+				text = soup.get_text()
+				lines = (line.strip() for line in text.splitlines())
+    			chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+    			text = '\n'.join(chunk for chunk in chunks if chunk)
+
+    			if regex_keyphrase.search(text):
+					urls_containing_keyphrase.append(page_url)
+					total_keyphrase_url = total_keyphrase_url + 1
+					print "%d) CRAWLED=%d depth=%d FOR %s" %(total_keyphrase_url, total_crawled_urls, depth, page_url)
+
+			visited_urls.append((page_url, depth))
+			
+			# get unique children links
+			for link in soup.find_all('a', href=True):
+				if is_url_valid(page_url, link['href']):
+					whole_url = urlparse.urljoin(page_url, link['href'])
+					# remove part after # if any
+					if "#" in whole_url:
+						whole_url = whole_url[:whole_url.find("#")]
+					if is_unique_url(whole_url):
+						url_frontier.append((whole_url, depth + 1))
+
+		
+def crawl(seed_page = unicode("http://en.wikipedia.org/wiki/Hugh_of_Saint-Cher","utf-8"), keyphrase = None):
+	""" Main entry crawl function
+	Arguments:
+		seed_page - the seed page, start page for crawling
+		keyphrase - word to search in documents
+
+	Returns:
+		List of either visited URLs or list of URLs containing the keyphrase
+	"""
+	url_frontier.append((seed_page,1))
+	real_crawling(keyphrase = keyphrase, maxdepth = 2)
+	if keyphrase == None:
+		return visited_urls
+	else:
+		return urls_containing_keyphrase
 
 
+# print "***********************"
+# print "***********************"
+# print "***********************"
+# print "1. URLs crawled upto depth 5 with limit of 1000 URLs"
+# list_without_keyphrase = crawl()
+# for i in list_without_keyphrase:
+# 	print i[0]
 
-crawl_main() #"http://en.wikipedia.org/wiki/Hugh_of_Saint-Cher","")
+
+print "***********************"
+print "***********************"
+print "***********************"
+print "2. Unique URLs containing keyphrase"
+start_time =  time.time()
+list_with_keyphrase = crawl(keyphrase = "concordance")
+end_time = time.time()
+for i in list_with_keyphrase:
+	print i
+print "***************************"
+print "TOTAL TIME %d" %(end_time - start_time)
