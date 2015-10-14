@@ -1,0 +1,21 @@
+For 1
+For A page rank = 0.249305555556
+For C page rank = 0.166469907407
+For B page rank = 0.142858796296
+For E page rank = 0.20874609375
+For D page rank = 0.126107204861
+For F page rank = 0.15279184932
+For 10
+For A page rank = 0.272522984694
+For C page rank = 0.159370120909
+For B page rank = 0.145505869637
+For E page rank = 0.193741103691
+For D page rank = 0.123652298684
+For F page rank = 0.159410956432
+For 100
+For A page rank = 0.261122489264
+For C page rank = 0.15618081606
+For B page rank = 0.144151142947
+For E page rank = 0.193451515828
+For D page rank = 0.122008964702
+For F page rank = 0.155543728167
