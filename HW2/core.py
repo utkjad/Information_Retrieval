@@ -26,7 +26,6 @@ def main(file_path):
 	# Assign initial page rank
 	for page in GRAPH_DICT.keys():
 		PAGE_RANK[page] =  1.0/total_no_pages
-
 	for iteret in [1, 10, 100]:
 		# Calculate total number of sink nodes
 		total_no_sink_nodes = 0
@@ -34,20 +33,19 @@ def main(file_path):
 			if len(GRAPH_DICT[page]) == 0:
 				total_no_sink_nodes += 1
 
-		# teleportation and spread remaining sink PR evenly
-		for page, in_nodes in GRAPH_DICT.items():
-			PAGE_RANK[page] = (1 - teleportation_factor) / total_no_pages
-			PAGE_RANK[page] += (teleportation_factor * total_no_sink_nodes) / total_no_pages
-			for in_node in GRAPH_DICT[page]:
-				
-				def _get_total_outlinks(node):
-					outlinks = 0
-					for page, in_node in GRAPH_DICT.items():
-						if node in GRAPH_DICT[page]:
-							outlinks += 1
-					return outlinks				
-
-				PAGE_RANK[page] += (teleportation_factor * PAGE_RANK[in_node])/ _get_total_outlinks(in_node)
+		for i in range (0, iteret):
+			# teleportation and spread remaining sink PR evenly
+			for page, in_nodes in GRAPH_DICT.items():
+				PAGE_RANK[page] = (1 - teleportation_factor) / total_no_pages
+				PAGE_RANK[page] += (teleportation_factor * total_no_sink_nodes) / total_no_pages
+				for in_node in GRAPH_DICT[page]:
+					def _get_total_outlinks(node):
+						outlinks = 0
+						for page, in_node in GRAPH_DICT.items():
+							if node in GRAPH_DICT[page]:
+								outlinks += 1
+						return outlinks				
+					PAGE_RANK[page] += (teleportation_factor * PAGE_RANK[in_node])/ _get_total_outlinks(in_node)
 
 		with open('output_first.txt', 'a') as file_object:
 			file_object.write('For ' + str(iteret) + '\n')
@@ -55,6 +53,6 @@ def main(file_path):
 				file_object.write('For ' + str(page) + ' page rank = ' + str(PAGE_RANK[page]) + '\n')
 
 
-			
+
 
 main('small_graph.txt')
