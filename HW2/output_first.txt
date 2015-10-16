@@ -1,17 +1,17 @@
 For 1
 For A page rank = 0.249305555556
-For C page rank = 0.166469907407
-For B page rank = 0.142858796296
-For E page rank = 0.20874609375
-For D page rank = 0.126107204861
-For F page rank = 0.15279184932
+For C page rank = 0.143055555556
+For B page rank = 0.119444444444
+For E page rank = 0.213888888889
+For D page rank = 0.13125
+For F page rank = 0.143055555556
 For 10
-For A page rank = 0.252731526091
-For C page rank = 0.151620953968
-For B page rank = 0.139586987665
-For E page rank = 0.187407168241
-For D page rank = 0.119101140315
-For F page rank = 0.151578492922
+For A page rank = 0.252036376028
+For C page rank = 0.151293765935
+For B page rank = 0.139306509183
+For E page rank = 0.187106610143
+For D page rank = 0.118962972777
+For F page rank = 0.151293765935
 For 100
 For A page rank = 0.252127105375
 For C page rank = 0.151306489867
@@ -21,39 +21,18 @@ For D page rank = 0.118907822574
 For F page rank = 0.151306489867
 For 1
 For A page rank = 0.249305555556
-For C page rank = 0.166469907407
-For B page rank = 0.142858796296
-For E page rank = 0.20874609375
-For D page rank = 0.126107204861
-For F page rank = 0.15279184932
+For C page rank = 0.143055555556
+For B page rank = 0.119444444444
+For E page rank = 0.213888888889
+For D page rank = 0.13125
+For F page rank = 0.143055555556
 For 10
-For A page rank = 0.252731526091
-For C page rank = 0.151620953968
-For B page rank = 0.139586987665
-For E page rank = 0.187407168241
-For D page rank = 0.119101140315
-For F page rank = 0.151578492922
-For 100
-For A page rank = 0.252127105375
-For C page rank = 0.151306489867
-For B page rank = 0.139306185319
-For E page rank = 0.187045906999
-For D page rank = 0.118907822574
-For F page rank = 0.151306489867
-For 1
-For A page rank = 0.249305555556
-For C page rank = 0.166469907407
-For B page rank = 0.142858796296
-For E page rank = 0.20874609375
-For D page rank = 0.126107204861
-For F page rank = 0.15279184932
-For 10
-For A page rank = 0.252731526091
-For C page rank = 0.151620953968
-For B page rank = 0.139586987665
-For E page rank = 0.187407168241
-For D page rank = 0.119101140315
-For F page rank = 0.151578492922
+For A page rank = 0.252036376028
+For C page rank = 0.151293765935
+For B page rank = 0.139306509183
+For E page rank = 0.187106610143
+For D page rank = 0.118962972777
+For F page rank = 0.151293765935
 For 100
 For A page rank = 0.252127105375
 For C page rank = 0.151306489867
