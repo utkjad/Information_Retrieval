@@ -110,7 +110,7 @@ def main(file_path):
 					file_object.write('For ' + str(i) + '\n')
 					for page in IN_DICT.keys():
 						file_object.write('For ' + str(page) + ' page rank = ' + str(PAGE_RANK[page]) + '\n')
-	else:
+	else: # for the WT2g inlinks.
 		def _should_continue():
 			""" Checks if perplexity converges 
 			"""
@@ -138,7 +138,7 @@ def main(file_path):
 
 
 		with open('output_second.txt', 'a') as file_object:
-			file_object.write("a list of the perplexity values you obtain in each round until convergence \n")
+			file_object.write("A list of the perplexity values you obtain in each round until convergence \n")
 			for value in perplexity:
 				file_object.write(str(perplexity.index(value))+ " " + str(value) + "\n")
 
@@ -179,9 +179,6 @@ def main(file_path):
 			file_object.write("\n\nthe proportion of pages whose PageRank is less than their initial uniform values \n")
 			file_object.write("= " + str(temp_count) + "/" + str(total_no_pages) + " = " + str(temp_count/total_no_pages))
 
-			print "in links of in links of WT21-B37-76"
-			for in_links in IN_DICT['WT21-B37-76']:
-				print len(IN_DICT[in_links])
-				
+# Main call of the program				
 main("small_graph.txt")
 main('in_link.txt')

@@ -5,7 +5,6 @@ Contents-
 2. FILES
 4. HOW TO RUN THE PROGRAM
 
-
 1. SYSTEM USED-
 Language - Python 2.7.6
 OS - Ubuntu 14.04
@@ -21,7 +20,7 @@ output_third.txt -  contains following-
 			- the proportion of pages with no in­links (sources);
 			- the proportion of pages with no out­links (sinks)
 			- the proportion of pages whose PageRank is less than their initial, uniform values.
-fourth_deliverable.pdf -  Analysis of Page Rank 
+fourth_deliverable.pdf -  Analysis of Page Rank implementation 
 
 3. HOW TO RUN PROGRAM - 
 code is in the file core.py
