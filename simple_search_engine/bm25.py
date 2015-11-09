@@ -51,7 +51,7 @@ def bm25_run():
 					term2 =  ((k1 + 1) * tf) / (k + tf)
 					term3 =  ((k2 + 1) * query_freq[term]) / (k2 + query_freq[term])
 					global bm25
-					bm25[doc_id] += math.log((term1*term2*term3))
+					bm25[doc_id] += math.log(term1)*term2*term3
 
 			# dump first 100 results in results.txt
 			#with open(result_file, 'wb') as file_object:
