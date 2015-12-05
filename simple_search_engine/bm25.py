@@ -59,12 +59,14 @@ def bm25_run():
 			# sorted_index = OrderedDict(sorted(bm25.iteritems(), key=operator.itemgetter(1), reverse=True))
 			# sorted_index_100 = Counter(bm25).most_common(100)
 
-			sorted_index_list = sorted(bm25.iteritems(), key=operator.itemgetter(1), reverse=True)[:limit]
+			sorted_index_list = sorted(bm25.iteritems(), key=operator.itemgetter(1), reverse=True)#[:limit]
 
-			rank = 1
-			for doc,bm25o in sorted_index_list:
-				print(str(query_id) + " Q0 " + str(doc) + " " + str(rank)  + " " +  str(bm25o) + " utkjad" )
-				rank += 1
+			# rank = 1
+			# for doc,bm25o in sorted_index_list:
+			# 	print(str(query_id) + " Q0 " + str(doc) + " " + str(rank)  + " " +  str(bm25o) + " utkjad" )
+			# 	rank += 1
+			print query
+			print len(sorted_index_list)
 				
 			query_id += 1
 			query_freq.clear()
