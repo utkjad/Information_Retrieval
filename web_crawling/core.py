@@ -58,10 +58,7 @@ def real_crawling(keyphrase=None, maxdepth=5):
 	total_keyphrase_url = 1
 
 	def _should_get_logged():
-		if keyphrase == None:
-			return len(url_frontier) != 0 and depth <= maxdepth and total_crawled_urls <= 1000
-		else:
-			return len(url_frontier) != 0 and depth <= maxdepth and total_keyphrase_url <= 1000
+		return len(url_frontier) != 0 and depth <= maxdepth and total_keyphrase_url <= 1000
 
 	# Apply BFS
 	while _should_get_logged(): 
